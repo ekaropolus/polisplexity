@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Portal IA Generativa</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href="{{url_for('static',filename='index.css')}}">
+
+</head>
+<body class="w3-light-gray">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp Menu</button>
+  <span class="w3-bar-item w3-right">Hadox Human Networks</span>
+</div>
+
+{% import "/base/macros/side_bar.html" as macros %}
+{{macros.side_bar()}}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-top:20px">
+{% block content %}
+{% endblock %}
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-light-grey">
+    <h4>FOOTER</h4>
+    <p>Powered by <a href="https://hadox.mx" target="_blank">Hadox Human Networks AI Labs</a></p>
+  </footer>
+
+  <!-- End page content -->
+</div>
+<script src="https://kit.fontawesome.com/7ef59acc6c.js" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='js/sidebar.js')}}"></script>
+
+
+</body>
+</html>
