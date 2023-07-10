@@ -1,11 +1,10 @@
 {% macro side_bar() %}
-
-<div class="w3-sidebar w3-white w3-animate-left" style="z-index:3;width:300px" id="mySidebar"><br>
-<hr>
-<hr>
+<!--<link rel='stylesheet' href="{{url_for('static',filename='css/nav_bar.css')}}">-->
+<div class="w3-sidebar w3-white w3-bar-block w3-animate-left w3-hide" style="z-index:3;width:300px" id="mySidebar"><br>
+    <p> Generative AI Services</p>
  <div class="w3-sidebar">
 
-        <button class="w3-button" onclick="AccFunc('Acc1')">Voice AI Services <i class="fa-solid fa-caret-down"></i></button>
+        <button class="w3-button" onclick="AccFunc('Acc1')"><i class="fa-solid fa-voicemail"></i>&nbsp;Voice AI Services <i class="fa-solid fa-caret-down"></i></button>
         <div id="Acc1" class="w3-hide w3-white w3-card">
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-microphone-alt fa-fw"></i>  Voice Generation</a>
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-microphone fa-fw"></i>  Voice Recognition</a>
@@ -13,7 +12,7 @@
         </div>
 
 
-        <button class="w3-button"  onclick="AccFunc('Acc2')">Text AI Services <i class="fa-solid fa-caret-down"></i></button>
+        <button class="w3-button"  onclick="AccFunc('Acc2')"><i class="fa-solid fa-text-width"></i>&nbsp;Text AI Services <i class="fa-solid fa-caret-down"></i></button>
         <div id="Acc2" class="w3-hide w3-white w3-card">
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-align-left fa-fw"></i>  Text Generation</a>
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-pencil-alt fa-fw"></i>  Text Correction</a>
@@ -21,7 +20,7 @@
         </div>
 
 
-        <button class="w3-button" onclick="AccFunc('Acc3')">Sound AI Services <i class="fa-solid fa-caret-down"></i></button>
+        <button class="w3-button" onclick="AccFunc('Acc3')"><i class="fa-solid fa-headphones-simple"></i>&nbsp;Sound AI Services <i class="fa-solid fa-caret-down"></i></button>
         <div id="Acc3" class="w3-hide w3-white w3-card">
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-music fa-fw"></i>  Music Generation</a>
             <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-volume-up fa-fw"></i>  Sound Generation</a>
@@ -29,7 +28,7 @@
         </div>
 
 
-  <button class="w3-button" onclick="AccFunc('Acc4')">Video AI Services <i class="fa-solid fa-caret-down"></i></button>
+  <button class="w3-button" onclick="AccFunc('Acc4')"><i class="fa-solid fa-video"></i>&nbsp;Video AI Services <i class="fa-solid fa-caret-down"></i></button>
   <div id="Acc4" class="w3-hide w3-white w3-card">
     <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-video fa-fw"></i>  Video Analytics</a>
     <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-play-circle fa-fw"></i>  Video Summarization</a>
@@ -37,7 +36,7 @@
   </div>
 
 
-  <button class="w3-button" onclick="AccFunc('Acc5')">Image AI Services <i class="fa-solid fa-caret-down"></i></button>
+  <button class="w3-button" onclick="AccFunc('Acc5')"><i class="fa-solid fa-image"></i>&nbsp;Image AI Services <i class="fa-solid fa-caret-down"></i></button>
   <div id="Acc5" class="w3-hide w3-white w3-card">
     <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-image fa-fw"></i>  Image Recognition</a>
     <a href="#" class="w3-bar-item w3-button w3-padding w3-hover-blue"><i class="fas fa-object-ungroup fa-fw"></i>  Object Detection</a>
@@ -46,6 +45,9 @@
 
 
 </div>
+
+
+
 </div>
 
 {% endmacro %}

@@ -6,12 +6,19 @@ var overlayBg = document.getElementById("myOverlay");
 
 // Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
+//   if (mySidebar.style.display === 'block') {
+//     mySidebar.style.display = 'none';
+//     overlayBg.style.display = "none";
+//   } else {
+//     mySidebar.style.display = 'block';
+//     overlayBg.style.display = "block";
+//   }
+// }
+  var sidebar = document.getElementById("mySidebar");
+  if (sidebar.classList.contains("w3-hide")) {
+    sidebar.classList.remove("w3-hide");
   } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
+    sidebar.classList.add("w3-hide");
   }
 }
 

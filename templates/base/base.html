@@ -5,29 +5,74 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel='stylesheet' href="{{url_for('static',filename='index.css')}}">
+<script src="https://www.w3schools.com/lib/w3.js"></script>
 
+<link rel='stylesheet' href="{{url_for('static',filename='index.css')}}">
 </head>
-<body class="w3-light-gray">
 
 <!-- Top container -->
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp Menu</button>
-  <span class="w3-bar-item w3-right">Hadox Human Networks</span>
-</div>
+{% import "/base/macros/nav_bar.html" as macros %}
+{{macros.nav_bar(current_user=current_user)}}
+
+<body class="w3-light-gray">
 
 {% import "/base/macros/side_bar.html" as macros %}
 {{macros.side_bar()}}
+
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-top:20px">
+
 {% block content %}
 {% endblock %}
 
-  <!-- Footer -->
-  <footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://hadox.mx" target="_blank">Hadox Human Networks AI Labs</a></p>
-  </footer>
+<!-- Footer -->
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity">
+  <div class="w3-row-padding">
+    <div class="w3-quarter">
+      <h4>About Us</h4>
+      <p>Hadox Human Networks AI Labs is dedicated to advancing artificial intelligence technologies and applying them to solve real-world problems. Our team of experts is committed to developing innovative solutions and providing world-class services to our clients.</p>
+    </div>
+    <div class="w3-quarter">
+      <h4>Contact Us</h4>
+      <ul class="w3-ul w3-hoverable">
+        <li><i class="fa fa-map-marker w3-text-blue w3-large"></i> 123 Main Street, Anytown USA</li>
+        <li><i class="fa fa-phone w3-text-blue w3-large"></i> +1 (555) 555-1212</li>
+        <li><i class="fa fa-envelope w3-text-blue w3-large"></i> <a href="mailto:info@hadox.mx" class="w3-hover-text-blue">info@hadox.mx</a></li>
+      </ul>
+
+    </div>
+    <div class="w3-quarter">
+      <h4>Follow Us</h4>
+      <div class="w3-xlarge w3-padding-16">
+        <a href="#" class="w3-hover-text-indigo"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="w3-hover-text-light-blue"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="w3-hover-text-purple"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+                <div class="w3-quarter">
+          <h5>Get in touch with us to learn more about our services and how we can help your business.</h5>
+        <form>
+          <div class="w3-row-padding" style="margin:0 -16px;">
+            <div class="w3-half w3-margin-bottom">
+              <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+            </div>
+            <div class="w3-half">
+              <input class="w3-input w3-border" type="email" placeholder="Email" required name="Email">
+            </div>
+          </div>
+          <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+          <button class="w3-button w3-blue w3-section w3-right" type="submit">Send</button>
+        </form>
+      </div>
+  </div>
+  <hr>
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <p>© 2023 Hadox Human Networks AI Labs. All rights reserved.</p>
+    </div>
+</footer>
+
 
   <!-- End page content -->
 </div>
@@ -36,4 +81,5 @@
 
 
 </body>
+
 </html>

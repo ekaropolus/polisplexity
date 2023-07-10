@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Criminal Sketch Generator</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="w3-container">
+        <h1 class="w3-center">Criminal Sketch Generator</h1>
+        <div class="w3-row">
+            <div class="w3-col l6">
+                <form action="{{ url_for('genpor.genpor_home') }}" method="post" class="w3-container">
+                    <label for="sex">Sex:</label>
+                    <input type="text" id="sex" name="sex" class="w3-input w3-border"><br>
+
+                    <label for="eye">Eye color:</label>
+                    <input type="text" id="eye" name="eye" class="w3-input w3-border"><br>
+
+                    <label for="eyebrow">Eyebrow type:</label>
+                    <input type="text" id="eyebrow" name="eyebrow" class="w3-input w3-border"><br>
+
+                    <label for="mouth">Mouth type:</label>
+                    <input type="text" id="mouth" name="mouth" class="w3-input w3-border"><br>
+
+                    <label for="skin">Skin color:</label>
+                    <input type="text" id="skin" name="skin" class="w3-input w3-border"><br>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" class="w3-input w3-border"><br>
+
+                    <input type="submit" value="Generate sketch" class="w3-button w3-blue">
+                </form>
+            </div>
+            <div class="w3-col l6">
+                {% if image_url %}
+                    <h2 class="w3-center">Generated Sketch</h2>
+                    <div class="w3-center">
+                        <img src="{{ image_url }}" alt="Generated sketch" class="w3-image">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

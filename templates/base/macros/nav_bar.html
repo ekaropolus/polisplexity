@@ -1,0 +1,62 @@
+{% macro nav_bar(current_user) %}
+<div class="w3-top">
+<div class="w3-bar w3-black">
+
+  <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>&nbsp Menu</button>
+
+
+<!--Help button-->
+<div class="w3-dropdown-hover w3-right">
+  <a href="#" class="w3-button">
+    <i class="fa fa-question-circle"></i>
+  </a>
+  <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+    <a href="#" class="w3-bar-item w3-button">Sporte</a>
+    <a href="#" class="w3-bar-item w3-button">Buscar en la documentación</a>
+    <a href="#" class="w3-bar-item w3-button">Guias de arquitectura ML</a>
+    <a href="#" class="w3-bar-item w3-button">FAQs</a>
+    <a href="#" class="w3-bar-item w3-button">Tutoriales</a>
+  </div>
+</div>
+<!--End help button-->
+
+<!--Alerts button-->
+<div class="w3-dropdown-hover w3-right">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <a href="#" class="w3-bar-item w3-button w3-right">
+    <i class="fa fa-bell"></i>&nbsp;
+    {% if messages|length != 0 %}
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ messages|length }}</span>
+    {% endif %}
+  </a>
+<div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+<li><a class="dropdown-item" href="#">{{ message }}</a></li>
+</div>
+{% endfor %}
+</div>
+{% endwith %}
+</div>
+<!--End alert button-->
+
+<!--Users button-->
+<div class="w3-dropdown-hover w3-right">
+    <a href="#" class="w3-bar-item w3-button w3-right">
+    <i class="fa fa-user"></i>&nbsp;
+  </a>
+<div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+            {% if current_user.is_authenticated %}
+            <a class="w3-bar-item w3-button" href="{{ url_for('users.account') }}">Account</a>
+            <a class="w3-bar-item w3-button" href="{{ url_for('users.logout') }}">Logout</a>
+            {% else %}
+            <a class="w3-bar-item w3-button" href="{{ url_for('users.login') }}">Login</a>
+            <a class="w3-bar-item w3-button" href="{{ url_for('users.register') }}">Register</a>
+            {% endif %}
+</div>
+</div>
+<!--End users button-->
+
+</div>
+</div>
+{% endmacro %}

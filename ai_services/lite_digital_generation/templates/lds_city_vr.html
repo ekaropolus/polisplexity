@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>LDS City</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Camera and controls -->
+      <a-entity camera look-controls wasd-controls position="0 2 0"></a-entity>
+
+      <!-- Sky -->
+      <a-sky id="sky" color="#87CEEB"></a-sky>
+
+      <!-- Ground plane -->
+      <a-plane position="0 -0.1 0" rotation="-90 0 0" width="200" height="200" material="src: url(https://cdn.aframe.io/a-painter/images/floor.jpg); repeat: 100 100;"></a-plane>
+
+      <!-- Buildings -->
+      {% for building in city_data.buildings %}
+      <a-entity id="{{ building.id }}" status="{{ building.status }}">
+        <a-text value="Status: {{ building.status }}" position="{{ building.position_x }} {{ building.height }} {{ building.position_z }}" scale="2 2 2"></a-text>
+        <a-box position="{{ building.position_x }} 0 {{ building.position_z }}" width="{{ building.width }}" height="{{ building.height }}" depth="{{ building.depth }}" rotation="0 0 0" color="{{ building.color }}"></a-box>
+      </a-entity>
+      {% endfor %}
+
+      <!-- Lamps -->
+      {% for lamp in city_data.lamps %}
+      <a-entity id="{{ lamp.id }}" status="{{ lamp.status }}" position="{{ lamp.position_x }} 0 {{ lamp.position_z }}">
+        <a-text value="Status: {{ lamp.status }}" position="0 {{ lamp.height }} 0" scale="2 2 2"></a-text>
+        <a-cone radius-bottom="0.1" radius-top="0.5" height="{{ lamp.height }}" color="{{ lamp.color }}"></a-cone>
+        <a-sphere radius="0.2" color="#FFFFFF" position="0 {{ lamp.height / 2 }} 0"></a-sphere>
+      </a-entity>
+      {% endfor %}
+
+      <!-- Trees -->
+      {% for tree in city_data.trees %}
+      <a-entity id="{{ tree.id }}" status="{{ tree.status }}" position="{{ tree.position_x }} 0 {{ tree.position_z }}">
+        <a-text value="Status: {{ tree.status }}" position="0 {{ tree.height + tree.radius_top }} 0" scale="2 2 2"></a-text>
+        <a-cone radius-bottom="{{ tree.radius_bottom }}" radius-top="{{ tree.radius_top }}" height="{{ tree.height }}" color="{{ tree.color_trunk }}"></a-cone>
+        <a-sphere radius="{{ tree.radius_top }}" color="{{ tree.color_leaves }}" position="0 {{ tree.height }} 0"></a-sphere>
+      </a-entity>
+      {% endfor %}
+    </a-scene>
+    <script src="{{url_for('lds.static', filename='js/lds_city_vr.js')}}"></script>
+  </body>
+</html>

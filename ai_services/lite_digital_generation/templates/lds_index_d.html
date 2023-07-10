@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>City View</title>
+	<style type="text/css">
+		.building {
+			position: absolute;
+			transform-origin: bottom center;
+			background-color: gray;
+			border: 1px solid black;
+		}
+		.lamp {
+			position: absolute;
+			transform-origin: bottom center;
+			background-color: gold;
+			border: 1px solid black;
+			width: 2px;
+			height: 4px;
+		}
+		.tree {
+			position: absolute;
+			transform-origin: bottom center;
+		}
+		.tree .trunk {
+			background-color: brown;
+			border: 1px solid black;
+			width: 2px;
+		}
+		.tree .leaves {
+			background-color: green;
+			border-radius: 50%;
+			width: 6px;
+			height: 6px;
+		}
+	</style>
+</head>
+<body>
+	{% for building in buildings %}
+		<div class="building" style="height: {{ building.height }}px; width: {{ building.width }}px; depth: {{ building.depth }}px; background-color: {{ building.color }}; transform: translate({{ building.position_x }}px, {{ building.position_y }}px) rotateY({{ building.rotation_y }}deg) translateZ({{ building.position_z }}px);"></div>
+	{% endfor %}
+
+	{% for lamp in lamps %}
+		<div class="lamp" style="transform: translate({{ lamp.position_x }}px, {{ lamp.position_y }}px) translateZ({{ lamp.position_z }}px);"></div>
+	{% endfor %}
+
+	{% for tree in trees %}
+		<div class="tree" style="transform: translate({{ tree.position_x }}px, {{ tree.position_y }}px) translateZ({{ tree.position_z }}px);">
+			<div class="trunk" style="height: {{ tree.height }}px; background-color: {{ tree.color_trunk }};"></div>
+			<div class="leaves" style="margin-top: -{{ tree.height / 2 }}px; margin-left: -{{ tree.radius_top }}px; background-color: {{ tree.color_leaves }};"></div>
+		</div>
+	{% endfor %}
+</body>
+</html>

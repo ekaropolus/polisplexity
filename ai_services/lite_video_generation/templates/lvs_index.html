@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video End Credits Generator</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('lvs.static',filename='css/lvs_index.css') }}">
+</head>
+<body>
+
+<form action="{{ url_for('lvs.lvs_vg_home') }}" method="post" class="w3-container w3-display-middle" onsubmit="showSpinner()">
+    <div class="w3-row">
+        <h3>End Credits Generator</h3>
+    </div>
+    <div class="w3-row">
+        <div class="w3-col l6 s12 m6">
+            <label for="credits">Enter the actor credits:</label>
+            <textarea name="credits" id="credits" class="w3-input"></textarea>
+        </div>
+        <div class="w3-col l1 s12 m1">
+            <div><p>&nbsp;</p></div> <!-- add an empty space -->
+        </div>
+        <div class="w3-col l5 s12 m5" style="text-align: center;">
+            <button class="w3-btn w3-blue w3-round-large"><i class="fa-solid fa-film"></i></button>
+            <div id="spinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Generating video...</div>
+        </div>
+    </div>
+    {% if video_file %}
+        <video id="credits-video" width="100%" height="auto" controls>
+            <source src="{{ url_for('lvs.static', filename= 'videos/' + video_file) }}" type="video/mp4">
+        </video>
+    {% endif %}
+</form>
+
+<script src="{{url_for('lvs.static', filename='js/lvs_index.js')}}"></script>
+<script src="https://kit.fontawesome.com/7ef59acc6c.js" crossorigin="anonymous"></script>
+</body>
+</html>

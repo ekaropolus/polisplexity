@@ -1,0 +1,78 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+h3 {
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    h3 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h3 {
+        font-size: 15px;
+    }
+}
+
+label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #555;
+}
+
+@media only screen and (max-width: 768px) {
+label {
+font-size: 12px;
+}
+}
+
+input[type="text"], textarea {
+    border: none;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    margin-top: 20px;
+}
+
+a.w3-btn {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    margin-top: 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.w3-btn:hover {
+    background-color: #0056b3;
+}
+
+hr {
+    border-top: 2px solid #ccc;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generación de Imágenes por AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2 class="text-center mb-3">Increase Image Resolution (Bria)</h2>
+        <p>Upscale  the resolution of any image. <br>
+            Test it with "https://ih1.redbubble.net/image.524327012.7709/flat,128x128,075,t.u2.jpg"
+        </p>
+        <form action="{{ url_for('bria_highres.index_bria_highres') }}" method="post">
+            <div class="d-flex">
+                <input type="url" class="form-control mb-3 mx-3 w-80" name="img_url" placeholder="Enter an Image URL">
+                <button class="btn btn-primary mx-3 w-25 h-75" type="submit">Submit</button>
+            </div>
+        </form>
+
+        <div>
+            <ul>
+                <li>PNG files with transparency are not supported by this feature at the moment.</li>
+            </ul>
+        </div>
+
+        {% if img_url %}
+        <div>
+          <p> Original Image:   <a href="{{ img_url }}">Download</a>   </p>
+          <div id="Image01"></div>
+          <img src="{{ img_url }}"
+            onerror=
+            "javascript: alert('The image has failed to load')" />
+        </div>
+        {% endif %}
+
+        {% if url_upscaled %}
+        <div>
+          <p>  Rescaled Image  <a href="{{ url_upscaled }}">Download</a>   </p>
+          <div id="Image02"></div>
+          <img src="{{ url_upscaled }}"
+            onerror=
+            "javascript: alert('The image has failed to load')" />
+
+        </div>
+        {% endif %}
+
+
+    </div>
+</body>
+</html>

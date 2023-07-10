@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lite Voice Generation</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('lvc.static',filename='css/lvc_index.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<form action="{{ url_for('lvc.lvc_vg_home') }}" method="post" class="w3-container w3-display-middle" onsubmit="showSpinner()">
+    <h3 class="w3-center"> Give voice to your article</h3>
+    <div class="w3-row">
+        <div class="w3-col l6 s12">
+            <label for="article_title">Article Title:</label><br>
+            <input type="text" id="article_title" name="article_title" value="Artificial Intelligence is awesome!" class="w3-input"><br>
+            <label for="article_body">Article Body:</label><br>
+            <textarea id="article_body" name="article_body" class="w3-input"></textarea><br>
+            <button class="w3-btn w3-blue w3-round-large w3-center"><i class="fas fa-volume-up"></i></button>
+            <div id="spinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Generating voice...</div>
+        </div>
+        <div class="w3-col l6 s12 w3-center">
+            {% if audio_file %}
+                <a href="{{ url_for('lvc.static', filename='audios/' + audio_file) }}" download class="w3-btn w3-blue">
+                    <i class="fas fa-download"></i> Download Audio
+                </a>
+                <hr>
+                <audio controls>
+                    <source src="{{ url_for('lvc.static', filename='audios/' + audio_file) }}" type="audio/wav">
+                </audio>
+            {% endif %}
+        </div>
+    </div>
+</form>
+<script src="https://kit.fontawesome.com/7ef59acc6c.js" crossorigin="anonymous"></script>
+<script src="{{url_for('lvc.static', filename='js/lvc_index.js')}}"></script>
+</body>
+</html>

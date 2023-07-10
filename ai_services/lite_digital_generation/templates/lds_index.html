@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>City Viewer</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('lds.static', filename='css/lds_index.css') }}">
+  <!-- Google Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Polisplexity</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="cityDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          City IDs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="cityDropdown">
+          {% for cityId in cities %}
+          <a class="dropdown-item city-id-link" href="#" data-city-id="{{ cityId }}">{{ cityId }}</a>
+          {% endfor %}
+        </div>
+      </li>
+    </ul>
+<form class="form-inline my-2 my-lg-0 ml-3">
+  <div class="input-group">
+    <input type="text" class="form-control" style="width: 500px;" placeholder="Ask to the City" id="search-input">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button" id="search-button"><i class="material-icons">search</i></button>
+    </div>
+  </div>
+</form>
+
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="material-icons">notifications</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-bs-toggle ="offcanvas" data-bs-target="#instructionsSidebar" aria-controls="instructionsSidebar"><i class="material-icons">help_outline</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-bs-toggle ="offcanvas" data-bs-target="#simulationSidebar" aria-controls="simulationSidebar"><i class="material-icons">more_vert</i></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-bs-toggle ="offcanvas" data-bs-target="#userSidebar" aria-controls="userSidebar"><i class="material-icons">account_circle</i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid">
+<div class="row">
+<!-- Iframe Container -->
+<div class="col">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">City View</h5>
+      <div id="iframe-container">
+        <iframe id="city-iframe" src=""></iframe>
+      </div>
+      <div class="card-footer">
+        <p class="card-text">This is a 3D view of the city. Use your mouse to explore the city from different angles. You can also view this city in virtual reality for an immersive experience.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <div class="col">
+    <!-- Create Objects Card -->
+        <hr>
+<div class="card">
+  <div id="createObjectsCollapse" class="collapse show" aria-labelledby="createObjectsHeader">
+    <div class="card-body">
+        <h5 class="card-title">Create</h5>
+      <button class="btn btn-primary" id="create-city-button">Create City</button>
+      <button class="btn btn-primary" id="create-house-button">Create House</button>
+      <button class="btn btn-primary" id="create-store-button">Create Store</button>
+      <button class="btn btn-primary" id="create-lamp-button">Create Lamp</button>
+      <button class="btn btn-primary" id="create-tree-button">Create Tree</button>
+    </div>
+  </div>
+</div>
+
+<hr>
+    <!-- Statistics Card -->
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Statistics</h5>
+          <a class="navbar-brand" id="houses-count"><i class="material-icons">home</i> Houses: 0</a>
+          <a class="navbar-brand" id="stores-count"><i class="material-icons">store</i> Stores: 0</a>
+          <a class="navbar-brand" id="lamps-count"><i class="material-icons">lightbulb</i> Lamps: 0</a>
+          <a class="navbar-brand" id="trees-count"><i class="material-icons">nature</i> Trees: 0</a>
+        </div>
+      </div>
+
+<hr>
+    <!-- Search Card -->
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">AI Thoughts</h5>
+          <p class="card-text" id="search-response-text"></p>
+          <button class="btn btn-secondary" type="button" id="clear-button">Clear</button>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+</div>
+
+<!-- Offcanvas Instructions Sidebar -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="instructionsSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Instructions</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Context Card -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">App Context</h5>
+        <p class="card-text">The Polisplexity app is designed to help you create better cities by utilizing AI and urban models based on complex dynamic systems. It provides a 3D visualization of cities where you can explore buildings, lamps, trees, and more. Follow the instructions below to make the most out of the app:</p>
+      </div>
+    </div>
+
+    <!-- Instructions List -->
+    <ol>
+      <li>Choose a city from the dropdown menu in the navigation bar.</li>
+      <li>The 3D view of the selected city will be displayed in the City View card.</li>
+      <li>Explore the city by using your mouse to rotate and zoom in/out.</li>
+      <li>Click on any building, lamp, or tree to view additional details.</li>
+      <li>Use the search box to ask questions or search for specific information about the city.</li>
+      <li>View the statistics and status summary in the Statistics card.</li>
+      <li>Use the Create Objects card to add new buildings, lamps, and trees to the city.</li>
+      <li>Click the "View in VR" link in the City View card to experience the city in virtual reality.</li>
+      <li>Enjoy exploring the virtual city!</li>
+    </ol>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="simulationSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Simulation Parameters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Context Card -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Simulation Context</h5>
+        <p class="card-text">Adjust the parameters to simulate and fine-tune AI urban models, AI city management models, and AI city data models. Use the sliders, radio buttons, and checkboxes below to customize the simulation parameters:</p>
+      </div>
+    </div>
+
+    <!-- Simulation Parameters -->
+    <form>
+      <div class="mb-3">
+        <label for="urbanModelSlider" class="form-label">AI Urban Model</label>
+        <input type="range" class="form-range" id="urbanModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <label for="cityManagementModelSlider" class="form-label">AI City Management Model</label>
+        <input type="range" class="form-range" id="cityManagementModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <label for="cityDataModelSlider" class="form-label">AI City Data Model</label>
+        <input type="range" class="form-range" id="cityDataModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="simulationCheckbox">
+          <label class="form-check-label" for="simulationCheckbox">
+            Enable Simulation
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode1" value="mode1" checked>
+          <label class="form-check-label" for="simulationMode1">
+            Simulation Mode 1
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode2" value="mode2">
+          <label class="form-check-label" for="simulationMode2">
+            Simulation Mode 2
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Apply Simulation</button>
+    </form>
+  </div>
+</div>
+
+<!-- Offcanvas User Icon Sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="userSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">User Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- User Information Card -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">SaaS Business Model</h5>
+        <p class="card-text">Welcome, [Username]! Here is your user information:</p>
+        <ul>
+          <li>Credits: [Credits Left]</li>
+          <li>Plan Version: [Plan Version]</li>
+          <li>Pseudonym: [Pseudonym]</li>
+          <li>Upcoming Models: [Upcoming Models]</li>
+        </ul>
+        <p>Upgrade to the <a href="[Upgrade Link]">next plan</a> for access to advanced features and more models.</p>
+      </div>
+    </div>
+
+    <!-- Quantum Machine Learning Card -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Upcoming Models on Quantum Machine Learning</h5>
+        <p class="card-text">Stay tuned for our upcoming models based on Quantum Machine Learning. They will revolutionize the way we simulate and optimize urban systems.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and LDS JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="{{ url_for('lds.static', filename='js/lds_index.js') }}"></script>
+</body>
+</html>

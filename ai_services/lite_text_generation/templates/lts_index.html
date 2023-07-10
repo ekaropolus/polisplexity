@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Generator</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('lts.static',filename='css/lts_index.css') }}">
+</head>
+<body>
+<form action="{{ url_for('lts.lts_tg_home') }}" method="post" class="w3-container w3-display-middle">
+    <h3>Generate a ultra secure password</h3>
+    <div class="w3-row">
+        <div class="w3-col l6 s12 m6">
+            <label for="input_text">Enter some text:</label>
+            <input type="text" id="input_text" name="input_text" class="w3-input">
+        </div>
+        <div class="w3-col l1 s12 m1">
+            <div><p>&nbsp;</p></div> <!-- add an empty space -->
+        </div>
+        <div class="w3-col l5 s12 m5">
+            <button type="submit" class="w3-btn w3-round-large w3-blue"><i class="fa fa-key"></i></button>
+            {% if generated_text %}
+                <button class="w3-btn w3-round-large w3-blue" onclick="copyToClipboard('{{ generated_text }}')"><i class="fa fa-clipboard"></i></button>
+                <div>Generated Password:&nbsp;{{ generated_text }}</div>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+<script src="{{url_for('lts.static', filename='js/lts_index.js')}}"></script>
+<script src="https://kit.fontawesome.com/7ef59acc6c.js" crossorigin="anonymous"></script>
+</body>
+</html>

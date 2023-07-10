@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Criminal Sketch Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+    <div class="w3-container w3-padding-32 w3-center">
+        <h1 class="w3-margin w3-jumbo">Criminal Sketch Generator</h1>
+    </div>
+    <div class="w3-row-padding w3-padding-64 w3-container">
+        <div class="w3-col m6 w3-padding-large">
+            <h2 class="w3-center">Create a Sketch</h2>
+            <form action="{{ url_for('genpor.genpor_home') }}" method="post" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+                <label for="sex">Sex</label>
+                <input type="text" id="sex" name="sex" class="w3-input w3-border"><br>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" class="w3-input w3-border"><br>
+
+                <label for="skin">Skin Color</label>
+                <input type="text" id="skin" name="skin" class="w3-input w3-border"><br>
+
+                <label for="eye">Eye Color</label>
+                <input type="text" id="eye" name="eye" class="w3-input w3-border"><br>
+
+                <label for="eyebrow">Eyebrow Type</label>
+                <input type="text" id="eyebrow" name="eyebrow" class="w3-input w3-border"><br>
+
+                <label for="nose">Nose Type</label>
+                <input type="text" id="nose" name="nose" class="w3-input w3-border"><br>
+
+                <label for="mouth">Mouth Type</label>
+                <input type="text" id="mouth" name="mouth" class="w3-input w3-border"><br>
+
+                <label for="jaw">Jaw Type</label>
+                <input type="text" id="jaw" name="jaw" class="w3-input w3-border"><br>
+
+                <label for="beard">Beard Type</label>
+                <input type="text" id="beard" name="beard" class="w3-input w3-border"><br>
+
+                <label for="hair">Hair Type</label>
+                <input type="text" id="hair" name="hair" class="w3-input w3-border"><br>
+
+                <button type="submit" class="w3-button w3-block w3-blue w3-margin-bottom">Generate Sketch</button>
+            </form>
+        </div>
+        <div class="w3-col m6 w3-padding-large">
+            {% if image_url %}
+                <h2 class="w3-center">Generated Sketch</h2>
+                <img src="{{ image_url }}" alt="Generated Sketch" class="w3-image">
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

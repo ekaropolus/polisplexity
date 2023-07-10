@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('main.static',filename='css/main.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add meta tags describing the platform -->
+    <meta name="description" content="Hadox Human Networks' Center Innovation and Technology Development (CITD) is a platform for generative artificial intelligence.">
+    <meta name="keywords" content="Hadox Human Networks, CITD, platform, generative artificial intelligence">
+    <title>Platform for Generative Artificial Intelligence | Hadox Human Networks' CITD</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+  </header>
+
+<section class="w3-container">
+  <div class="w3-row">
+    <div class="w3-col m6">
+      <h1>Artificial Intelligence</h1>
+    </div>
+    <div class="w3-col m6 w3-center">
+      <model-viewer src={{url_for('main.static', filename='glb/head.glb')}} ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1"> </model-viewer>
+    </div>
+  </div>
+</section>
+
+<!-- Services section -->
+<section class="services-section">
+	<h2>Services</h2>
+	<div class="services-container">
+		<div class="w3-row-padding services-grid">
+			{% for service in services %}
+			<div class="w3-col l4 m6 s12">
+				<div class="w3-card-4 service-card">
+					<div class="service-details">
+						<h4><i class="{{ services[service]['i'] }}"></i> {{ services[service]['h3'] }}</h4>
+						<p class="service-description">{{ services[service]['p'] }}</p>
+					</div>
+					<button class="toggle-btn">Try the Service</button>
+					<div class="service-iframe-container" style="display:none;">
+						<iframe src="{{ services[service]['url'] }}" frameborder="0" allowfullscreen></iframe>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+
+
+ <!-- Services section -->
+<section class="services-section">
+	<h2>Services</h2>
+	<div class="services-container">
+		<div class="w3-row-padding services-grid">
+			{% for endpoint in endpoint_list %}
+			<div class="w3-col l4 m6 s12">
+				<div class="w3-card-4 service-card">
+					<div class="service-details">
+						<h4><i class="fa fa-file-text w3-text-black"></i> Service</h4>
+						<p class="service-description">{{ "This is an IA service " + endpoint }}</p>
+					</div>
+					<button class="toggle-btn">Try the Service</button>
+					<div class="service-iframe-container" style="display:none;">
+						<a href="{{ endpoint }}">click al servicio</a>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+
+
+  <!-- About section -->
+  <section class="about-section">
+    <h2>About Us</h2>
+    <p>Hadox Human Networks' Center Innovation and Technology Development (CITD) is a platform for generative artificial intelligence. Our mission is to unlock the power of AI to create new possibilities and drive innovation across industries. Our team of experts is dedicated to developing cutting-edge AI technologies and providing world-class services to our clients.</p>
+    <button class="cta-btn">Learn more</button>
+  </section>
+
+
+
+  <script src="{{url_for('main.static', filename='js/main.js')}}"></script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Image Generation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+
+<!-- Top container -->
+{% import "/base/macros/nav_bar.html" as macros %}
+{{macros.nav_bar(current_user=current_user)}}
+
+
+
+<!-- !PAGE CONTENT! -->
+<body>
+    <br>
+    <br>
+ <div class="jumbotron">
+
+  <div class="w3-container w3-margin-top">
+    <h2 class="w3-center w3-margin-bottom">AI Image Generation (Bria)</h2>
+    <form class="w3-container w3-margin-bottom" action="{{ url_for('bria.index_bria') }}" method="post">
+      <div class="w3-row-padding w3-margin-bottom">
+          <input class="w3-input w3-border w3-round-large" type="text" name="query" placeholder="Query">
+          <select class="w3-select w3-border w3-round-large" name="medium">
+            <option value="photography">Photography</option>
+            <option value="art">Art</option>
+          </select>
+          <select class="w3-select w3-border w3-round-large" name="style">
+            <option value="photo realistic">Photo realistic</option>
+            <option value="fashion">Fashion</option>
+            <option value="retro">Retro</option>
+            <option value="still life">Still life</option>
+            <option value="travel">Travel</option>
+            <option value="artistic">Artistic</option>
+            <option value="3d render">3D render</option>
+            <option value="realistic">Realistic</option>
+            <option value="comic book">Comic book</option>
+            <option value="minimalistic">Minimalistic</option>
+          </select>
+          <select class="w3-select w3-border w3-round-large" name="atmosphere">
+            <option value="dramatic">Dramatic</option>
+            <option value="vivid">Vivid</option>
+            <option value="warm">Warm</option>
+            <option value="cool">Cool</option>
+          </select>
+          <select class="w3-select w3-border w3-round-large" name="camera">
+            <option value="">None</option>
+            <option value="portrait">Portrait</option>
+            <option value="close up">Close up</option>
+            <option value="aerial">Aerial</option>
+            <option value="landscape">Landscape</option>
+          </select>
+          <button class="w3-button w3-block w3-blue w3-round-large" type="submit">Generate</button>
+      </div>
+    </form>
+
+    </div>
+
+{% if img_url %}
+<div class="w3-margin-bottom">
+  <p><a href="{{ img_url }}">Download</a></p>
+  <div class="w3-margin-bottom" id="Image01"></div>
+  <img class="w3-image" src="{{ img_url }}" onerror="javascript: alert('The image has failed to load')" />
+</div>
+{% endif %}
+  </div>
+</body>
+</html>

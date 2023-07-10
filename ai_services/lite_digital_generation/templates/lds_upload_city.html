@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LDS City Upload</title>
+</head>
+<body>
+  <h1>Upload City</h1>
+  <form method="POST" action="{{ url_for('lds.upload') }}">
+    <label for="city_data">City Data:</label><br>
+    <textarea id="city_data" name="city_data" rows="10" cols="50"></textarea><br><br>
+    <input type="submit" value="Upload City">
+  </form>
+</body>
+</html>

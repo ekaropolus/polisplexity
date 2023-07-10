@@ -1,0 +1,88 @@
+/* Set the width of the buttons and the video element */
+/* Main section */
+section#demos {
+  background-color: #f5f5f5;
+  padding: 40px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Webcam container */
+#liveView {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Webcam button */
+#webcamButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#webcamButton:hover {
+  background-color: #0056b3;
+}
+
+/* Video stream */
+#webcam {
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+/* Predictions container */
+#predictions {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Prediction label */
+.label {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Prediction box */
+.box {
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  display: inline-block;
+  text-align: center;
+  min-width: 100px;
+}
+
+/* Prediction class */
+.class {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Prediction score */
+.score {
+  font-size: 14px;
+  color: #333;
+}
