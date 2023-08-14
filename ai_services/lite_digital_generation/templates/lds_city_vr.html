@@ -27,7 +27,7 @@
 
       <!-- Lamps -->
       {% for lamp in city_data.lamps %}
-      <a-entity id="{{ lamp.id }}" status="{{ lamp.status }}" position="{{ lamp.position_x }} 0 {{ lamp.position_z }}">
+      <a-entity id="{{ lamp.id }}" status="{{ lamp.status }}" position="{{ lamp.position_x }} 1 {{ lamp.position_z }}">
         <a-text value="Status: {{ lamp.status }}" position="0 {{ lamp.height }} 0" scale="2 2 2"></a-text>
         <a-cone radius-bottom="0.1" radius-top="0.5" height="{{ lamp.height }}" color="{{ lamp.color }}"></a-cone>
         <a-sphere radius="0.2" color="#FFFFFF" position="0 {{ lamp.height / 2 }} 0"></a-sphere>
@@ -36,12 +36,22 @@
 
       <!-- Trees -->
       {% for tree in city_data.trees %}
-      <a-entity id="{{ tree.id }}" status="{{ tree.status }}" position="{{ tree.position_x }} 0 {{ tree.position_z }}">
+      <a-entity id="{{ tree.id }}" status="{{ tree.status }}" position="{{ tree.position_x }} 1 {{ tree.position_z }}">
         <a-text value="Status: {{ tree.status }}" position="0 {{ tree.height + tree.radius_top }} 0" scale="2 2 2"></a-text>
         <a-cone radius-bottom="{{ tree.radius_bottom }}" radius-top="{{ tree.radius_top }}" height="{{ tree.height }}" color="{{ tree.color_trunk }}"></a-cone>
         <a-sphere radius="{{ tree.radius_top }}" color="{{ tree.color_leaves }}" position="0 {{ tree.height }} 0"></a-sphere>
       </a-entity>
       {% endfor %}
+
+<!-- Humans -->
+{% for human in city_data.humans %}
+<a-entity id="{{ human.id }}" position="{{ human.position_x }} 1 {{ human.position_z }}" rotation="-90 0 0">
+  <a-obj-model src={{url_for('lds.static', filename=human.file)}} scale="1 1 1"></a-obj-model>
+  <a-text value="Status: {{ human.status }}" position="0 1.5 0" scale="2 2 2"></a-text>
+</a-entity>
+{% endfor %}
+
+
     </a-scene>
     <script src="{{url_for('lds.static', filename='js/lds_city_vr.js')}}"></script>
   </body>

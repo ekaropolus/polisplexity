@@ -1,2 +1,14 @@
 *.pyc
 __pycache__
+
+# Ignore log files
+*.log
+
+# Ignore a specific directory
+
+/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/credentials
+/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/credentials/vivid-env-392205-b3cc9269a41f.json
+
+# Ignore a specific file
+secret.txt
+/home/Admingania/portal_gain/ai_services/lite_digital_generation/__init__.py

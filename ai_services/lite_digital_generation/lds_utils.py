@@ -2,13 +2,16 @@ import random
 import uuid
 from datetime import datetime
 import json
-from . import cities
+from . import cities, replicate_api_key
 from google.oauth2 import service_account
 import google.cloud.aiplatform as aiplatform
 import vertexai
 from flask import jsonify
 from vertexai.language_models import TextGenerationModel
 import math
+import replicate
+import os
+import requests
 
 
 
@@ -146,6 +149,74 @@ def generate_tree(position_x, position_z, objects):
 
     return tree
 
+def generate_human(position_x, position_z, objects):
+    """Generate a human dictionary with random attributes at a valid position."""
+    # Define human attributes here, e.g., scale, posture, color, etc.
+    # For example:
+    scale = [1, 1, 1]
+    posture = "standing"
+    color = "#FF0000"  # Red color
+
+    status = random.choice(["healthy", "sick", "asleep", "mutated","Neo"])
+    human_id = str(uuid.uuid4())
+    if status == "mutated":
+        file = "models/mutant.obj"
+    elif status == "Neo":
+        file = "models/" + create_neo_human(human_id)
+    else:
+        file = "models/human.obj"
+
+    human = {
+        "id": human_id,
+        "scale": scale,
+        "posture": posture,
+        "color": color,
+        "position_x": position_x,
+        "position_y": 0,
+        "position_z": position_z,
+        "status": status,
+        "file": file,
+    }
+
+    return human
+
+def create_neo_human(human_id):
+
+    download_directory = "/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/models/"
+    # Create a Replicate client instance
+    client = replicate.Client(api_token=replicate_api_key)
+
+    # Define the input data (prompt) for the Neo human
+    input_data = {
+        "prompt": "A human with Neo status",
+        "save_mesh": True,
+    }
+
+    # Run the model to generate a Neo human mesh and get the generated file URL
+    output = client.run(
+        "cjwbw/shap-e:5957069d5c509126a73c7cb68abcddbb985aeefa4d318e7c63ec1352ce6da68c",
+        input=input_data
+    )
+
+    # Extract the generated mesh URL from the output
+    generated_mesh_url = output[1]
+
+    # Download the OBJ mesh
+    response = requests.get(generated_mesh_url)
+    if response.status_code == 200:
+        # Create the download directory if it doesn't exist
+        os.makedirs(download_directory, exist_ok=True)
+
+        # Extract the filename from the URL and save the mesh to the specified directory
+        neo_human = "neo_" + human_id + ".obj"
+        filename = os.path.join(download_directory, neo_human)
+        with open(filename, "wb") as file:
+            file.write(response.content)
+        return neo_human
+    else:
+        return "human.obj"
+
+
 def generate_city_random():
     num_buildings = random.randint(5, 45)
     num_lamps = random.randint(5, 45)
@@ -186,6 +257,8 @@ def generate_city_random():
         trees.append(tree)
         objects.append(tree)
 
+    humans = []
+
     city_id = str(uuid.uuid4())
     current_datetime = datetime.now()
 
@@ -193,6 +266,7 @@ def generate_city_random():
         "buildings": buildings,
         "lamps": lamps,
         "trees": trees,
+        "humans": humans,
         "datetime": current_datetime,
     }
 
@@ -205,6 +279,7 @@ def generate_default_city():
     buildings = [generate_building("house", objects), generate_building("store", objects)]
     lamps = [generate_lamp(-10, -10, objects)]  # Specify fixed position
     trees = [generate_tree(10, 10, objects)]
+    humans = [generate_human(-20, -20, objects)]
 
     # Generate a unique UUID for the city
     city_id = str(uuid.uuid4())
@@ -217,6 +292,7 @@ def generate_default_city():
         "buildings": buildings,
         "lamps": lamps,
         "trees": trees,
+        "humans": humans,
         "datetime": current_datetime,
     }
 
@@ -235,6 +311,7 @@ def upload_city(city_data):
         "buildings": city_data[city_id].get("buildings", []),
         "lamps": city_data[city_id].get("lamps", []),
         "trees": city_data[city_id].get("trees", []),
+        "humans": city_data[city_id].get("humans",[]),
         "datetime": current_datetime
     }
 
@@ -244,7 +321,7 @@ def create_house(city_id):
     """Create a house for the specified city ID."""
     city = cities.get(city_id)
     if city:
-        objects = city["buildings"] + city["lamps"] + city["trees"]
+        objects = city["buildings"] + city["lamps"] + city["trees"] + city["humans"]
         building = generate_building("house", objects)
         city["buildings"].append(building)
         return building
@@ -255,7 +332,7 @@ def create_store(city_id):
     """Create a store for the specified city ID."""
     city = cities.get(city_id)
     if city:
-        objects = city["buildings"] + city["lamps"] + city["trees"]
+        objects = city["buildings"] + city["lamps"] + city["trees"] + city["humans"]
         store = generate_store(random.uniform(-50, 50), random.uniform(-50, 50), objects)
         city["buildings"].append(store)
         return store
@@ -266,7 +343,7 @@ def create_lamp(city_id):
     """Create a lamp for the specified city ID."""
     city = cities.get(city_id)
     if city:
-        objects = city["buildings"] + city["lamps"] + city["trees"]
+        objects = city["buildings"] + city["lamps"] + city["trees"] + city["humans"]
         lamp = generate_lamp(random.uniform(-50, 50), random.uniform(-50, 50), objects)
         city["lamps"].append(lamp)
         return lamp
@@ -277,10 +354,21 @@ def create_tree(city_id):
     """Create a tree for the specified city ID."""
     city = cities.get(city_id)
     if city:
-        objects = city["buildings"] + city["lamps"] + city["trees"]
+        objects = city["buildings"] + city["lamps"] + city["trees"] + city["humans"]
         tree = generate_tree(random.uniform(-50, 50), random.uniform(-50, 50), objects)
         city["trees"].append(tree)
         return tree
+    else:
+        return None
+
+def create_human(city_id):
+    """Create a human for the specified city ID."""
+    city = cities.get(city_id)
+    if city:
+        objects = city["buildings"] + city["lamps"] + city["trees"] + city["humans"]
+        human = generate_human(random.uniform(-50, 50), random.uniform(-50, 50), objects)
+        city["humans"].append(human)
+        return human
     else:
         return None
 

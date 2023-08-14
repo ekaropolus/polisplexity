@@ -70,6 +70,11 @@ document.getElementById("create-tree-button").addEventListener("click", function
   createObject("create_tree");
 });
 
+// Create Human button click event
+document.getElementById("create-human-button").addEventListener("click", function() {
+  createObject("create_human");
+});
+
 // Search button click event
 document.getElementById("search-button").addEventListener("click", function() {
   const searchInput = document.getElementById("search-input");
@@ -120,7 +125,7 @@ function searchCity(query) {
         searchResponseText.textContent = `Response: ${response}`;
       }
 
-      
+
     })
     .catch(error => console.log('Error searching city:', error));
 }

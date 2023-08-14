@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, render_template
 from .lds_controllers import lds_dg_gen_ctr, lds_dg_single_ctr
 from .import cities
-from .lds_utils import upload_city, create_store, create_house, create_tree, create_lamp, get_city_statistics, ask_city
+from .lds_utils import upload_city, create_store, create_house, create_tree, create_lamp, get_city_statistics, ask_city, create_human
 
 
 lds = Blueprint('lds', __name__, template_folder='templates', static_folder='static')
@@ -70,6 +70,14 @@ def post_create_lamp(city_id):
     else:
         return "City not found"
 
+@lds.route('/city/<city_id>/create_human/', methods=['POST'])
+def post_create_human(city_id):
+    human = create_human(city_id)
+    if human:
+        return jsonify(human)
+    else:
+        return "City not found"
+
 @lds.route('/city/<city_id>/statistics/', methods=['GET'])
 def city_statistics(city_id):
     if city_id in cities:
@@ -79,7 +87,7 @@ def city_statistics(city_id):
     else:
         # Return an error message in JSON format
         return jsonify({"error": "City not found"})
-        
+
 @lds.route('/city/<city_id>/geography/', methods=['GET'])
 def city_geography(city_id):
     if city_id in cities:
