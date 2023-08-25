@@ -34,6 +34,7 @@
     <input type="text" class="form-control" style="width: 500px;" placeholder="Ask to the City" id="search-input">
     <div class="input-group-append">
       <button class="btn btn-primary" type="button" id="search-button"><i class="material-icons">search</i></button>
+      <button class="btn btn-primary" type="button" id="simulation-button"><i class="material-icons">code</i></button>
     </div>
   </div>
 </form>
@@ -108,13 +109,17 @@
 <hr>
     <!-- Search Card -->
 
-      <div class="card">
+    <div class="card">
         <div class="card-body">
-          <h5 class="card-title">AI Thoughts</h5>
-          <p class="card-text" id="search-response-text"></p>
-          <button class="btn btn-secondary" type="button" id="clear-button">Clear</button>
+            <h5 class="card-title">AI Thoughts</h5>
+            <pre class="card-text" id="search-response-text">{{ email_content }}</pre>
+            <form method="post" action="/send-email">
+                <input type="hidden" name="content" value="{{ email_content }}">
+                <button class="btn btn-secondary" type="button" id="clear-button">Clear</button>
+                <input class="btn btn-primary" type="submit" value="Send to Email">
+            </form>
         </div>
-      </div>
+    </div>
 
   </div>
 </div>
@@ -191,13 +196,13 @@
         <div class="form-check">
           <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode1" value="mode1" checked>
           <label class="form-check-label" for="simulationMode1">
-            Simulation Mode 1
+            Simulation Model code-bison@001
           </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode2" value="mode2">
           <label class="form-check-label" for="simulationMode2">
-            Simulation Mode 2
+            Simulation Model StableCode-Completion-Alpha-3B-4K
           </label>
         </div>
       </div>

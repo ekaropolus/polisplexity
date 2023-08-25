@@ -84,6 +84,15 @@ document.getElementById("search-button").addEventListener("click", function() {
   }
 });
 
+// Search button click event
+document.getElementById("simulation-button").addEventListener("click", function() {
+  const searchInput = document.getElementById("search-input");
+  const query = searchInput.value.trim();
+  if (query !== "") {
+    simulateCity(query);
+  }
+});
+
 // Function to create an object (house, store, lamp, tree)
 function createObject(route) {
   // Create a new XMLHttpRequest object
@@ -130,6 +139,25 @@ function searchCity(query) {
     .catch(error => console.log('Error searching city:', error));
 }
 
+// Function to simulate the city and display the response in the card
+function simulateCity(query) {
+  const url = `/ai_services/digital_services/city/${cityId}/simulate/?query=${encodeURIComponent(query)}`;
+  fetch(url, { method: 'GET' })
+    .then(response => response.json())
+    .then(response => {
+      const searchResponseText = document.getElementById('search-response-text');
+      const searchResponseCard = document.getElementById('search-response-card');
+
+      if (response.error) {
+        searchResponseText.textContent = `Error: ${response}`;
+      } else {
+        searchResponseText.textContent = `Response: ${response}`;
+      }
+
+
+    })
+    .catch(error => console.log('Error searching city:', error));
+}
 
 
 // Clear Button click event

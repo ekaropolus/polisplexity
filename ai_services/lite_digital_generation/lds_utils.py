@@ -8,10 +8,12 @@ import google.cloud.aiplatform as aiplatform
 import vertexai
 from flask import jsonify
 from vertexai.language_models import TextGenerationModel
+from vertexai.language_models import CodeGenerationModel
 import math
 import replicate
 import os
 import requests
+
 
 
 
@@ -558,7 +560,7 @@ def get_city_statistics(city_id):
 def ask_city(city_id, query):
     # Load the service account json file
 
-    json_credentials = "/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/credentials/vivid-env-392205-b3cc9269a41f.json"
+    json_credentials = "/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/credentials/vivid-env-392205-8d28ffaba58a.json"
     with open(json_credentials) as f:
         service_account_info = json.load(f)
         project_id = service_account_info["project_id"]
@@ -572,7 +574,7 @@ def ask_city(city_id, query):
     vertexai.init(project=project_id, location="us-central1")
 
     city_statistics = get_city_statistics(city_id)
-    print(city_statistics)
+
 
     text_prompt = f'''
             This are the statistic of the city:
@@ -592,4 +594,50 @@ def ask_city(city_id, query):
     response = model.predict( text_prompt, **parameters)
     return response.text
 
+def simulate_city(city_id, query):
+    # Load the service account json file
+
+    json_credentials = "/home/Admingania/portal_gain/ai_services/lite_digital_generation/static/credentials/vivid-env-392205-8d28ffaba58a.json"
+    with open(json_credentials) as f:
+        service_account_info = json.load(f)
+        project_id = service_account_info["project_id"]
+
+    my_credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
+    # Initialize Google AI Platform with project details and credentials
+    aiplatform.init(credentials=my_credentials)
+
+    # Initialize Vertex AI with project and location
+    vertexai.init(project=project_id, location="us-central1")
+
+    city_statistics = get_city_statistics(city_id)
+
+
+    text_prompt = f'''
+            This are the statistic of the city:
+            {city_statistics}
+
+            create a program using simpy in python to simulate and resolve this inquiry: {query}
+
+
+            '''
+    parameters = {
+        "temperature": 0.2,
+        "max_output_tokens": 2048
+    }
+    model = CodeGenerationModel.from_pretrained("code-bison@001")
+    response = model.predict( text_prompt, **parameters)
+
+    API_URL = "https://api-inference.huggingface.co/models/stabilityai/stablecode-completion-alpha-3b-4k"
+    headers = {"Authorization": "Bearer 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"}
+    payload = {	"inputs": response.text, "parameters": {"max_new_tokens" : 100}}
+    response_hf = requests.post(API_URL, headers=headers, json=payload).json()
+
+    response_out = ""
+    if "error" in response_hf:
+        response_out =response.text
+    else:
+        response_out = response_hf
+
+    return response_out
 
