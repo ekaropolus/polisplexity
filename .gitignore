@@ -3,6 +3,7 @@ __pycache__
 
 # Ignore log files
 *.log
+.env
 
 # Ignore a specific directory
 
@@ -11,4 +12,4 @@ __pycache__
 
 # Ignore a specific file
 secret.txt
-/home/Admingania/portal_gain/ai_services/lite_digital_generation/__init__.py
+/ai_services/lite_digital_generation/static/credentials
