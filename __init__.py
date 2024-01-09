@@ -1,18 +1,27 @@
 from flask import Flask
-from .configuration.config_dev import Config_DEV
-from .configuration.config_db import db
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from .configuration.config_dev import Config_DEV, URI_MONGO
+#from .configuration.config_db import db
 from .configuration.config_crypt import bcrypt
 from .configuration.config_auth import login_manager
+
+from .core_services.users.models import User
+
+from bson import ObjectId
 
 
 
 def create_app(config_class=Config_DEV):
-    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app = Flask(__name__, template_folder='templates', static_folder='static', static_url_path='/static')
     app.config.from_object(Config_DEV)
+
+# Create a new client and connect to the server
+    client = MongoClient(URI_MONGO, server_api=ServerApi('1'))
 
 # Blueprint register
     from portal_gain.main.routes import main
-    app.register_blueprint(main, url_prefix='/')
+    app.register_blueprint(main, url_prefix='/main/')
 
     from portal_gain.grid.routes import grid
     app.register_blueprint(grid, url_prefix='/grid/')
@@ -39,9 +48,9 @@ def create_app(config_class=Config_DEV):
     app.register_blueprint(lss, url_prefix='/ai_services/sound_services/')
 
     from portal_gain.ai_services.lite_digital_generation.lds_routes import lds
-    app.register_blueprint(lds, url_prefix='/ai_services/digital_services/')
+    app.register_blueprint(lds, url_prefix='/ai_services/digital_services/', static_folder='static', static_url_path='/static/')
 
-    from portal_gain.core_services.users.users_routes import users
+    from portal_gain.core_services.users.routes import users
     app.register_blueprint(users, url_prefix='/users/')
 
     from portal_gain.ai_services.bria.ai_services_bria_routes import bria
@@ -69,19 +78,31 @@ def create_app(config_class=Config_DEV):
     app.register_blueprint(gtp_avatar, url_prefix='/ai_services/gtp_avatar_service/')
 
 # Database Register
-    from  portal_gain.core_services.users.users_models import User
-    db.init_app(app)
-
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
-
+    app.db = client["polisplexity"]
 
 # Encrypthion Register
     bcrypt.init_app(app)
 
 # Authority Register
     login_manager.init_app(app)
+
+        # Ensure there is always an admin user
+    admin_user = {
+        "username": "admin",
+        "roles": ["admin"],
+        # Add other necessary fields such as oauth_provider, etc.
+    }
+    # Check if admin user exists, create if not
+    if app.db.users.count_documents({"username": "admin"}) == 0:
+        app.db.users.insert_one(admin_user)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        user_doc = app.db.users.find_one({'_id': ObjectId(user_id)})
+        if user_doc:
+            return User(user_id=user_doc['_id'], username=user_doc['username'], roles=user_doc['roles'])
+        return None
+
 
 
     return app

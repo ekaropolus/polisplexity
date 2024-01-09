@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, current_app
 from .lds_utils import generate_city_random, generate_default_city
 from . import cities
 
@@ -10,14 +10,14 @@ def lds_dg_gen_ctr():
         str: The rendered template for displaying the generated city.
     """
     if not cities:
-        generate_default_city()
+        generate_default_city(current_app)
         city_id = list(cities.keys())[0]
         city_data = cities[city_id]
     else:
-        city_id = generate_city_random()
+        city_id = generate_city_random(current_app)
         # Retrieve the city data from the global dictionary excluding the datetime
         city_data = cities[city_id]
-    return render_template('lds_city_vr.html', city_data=city_data)
+    return "city_data"
 
 
 def lds_dg_single_ctr(city_id):

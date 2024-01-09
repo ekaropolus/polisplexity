@@ -1,0 +1,54 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="simulationSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Simulation Parameters</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Context Card -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Simulation Context</h5>
+        <p class="card-text">Adjust the parameters to simulate and fine-tune AI urban models, AI city management models, and AI city data models. Use the sliders, radio buttons, and checkboxes below to customize the simulation parameters:</p>
+      </div>
+    </div>
+
+    <!-- Simulation Parameters -->
+    <form>
+      <div class="mb-3">
+        <label for="urbanModelSlider" class="form-label">AI Urban Model</label>
+        <input type="range" class="form-range" id="urbanModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <label for="cityManagementModelSlider" class="form-label">AI City Management Model</label>
+        <input type="range" class="form-range" id="cityManagementModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <label for="cityDataModelSlider" class="form-label">AI City Data Model</label>
+        <input type="range" class="form-range" id="cityDataModelSlider" min="0" max="100" step="1">
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="simulationCheckbox">
+          <label class="form-check-label" for="simulationCheckbox">
+            Enable Simulation
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode1" value="mode1" checked>
+          <label class="form-check-label" for="simulationMode1">
+            Simulation Model code-bison@001
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="simulationMode" id="simulationMode2" value="mode2">
+          <label class="form-check-label" for="simulationMode2">
+            Simulation Model StableCode-Completion-Alpha-3B-4K
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Apply Simulation</button>
+    </form>
+  </div>
+</div>

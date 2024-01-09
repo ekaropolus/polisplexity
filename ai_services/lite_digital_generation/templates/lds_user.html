@@ -1,0 +1,35 @@
+<!-- Offcanvas User Icon Sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="userSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">User Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <!-- User Information Card -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">SaaS Business Model</h5>
+        <button id="login-btn" type="button" class="btn btn-primary">Login</button>
+        <button id="logout-btn" type="button" class="btn btn-secondary" disabled>Logout</button>
+        <p class="card-text">Welcome, [Username]! Here is your user information:</p>
+        <ul>
+          <li>Credits: [Credits Left]</li>
+          <li>Plan Version: [Plan Version]</li>
+          <li>Pseudonym: [Pseudonym]</li>
+          <li>Upcoming Models: [Upcoming Models]</li>
+        </ul>
+        <p>Upgrade to the <a href="[Upgrade Link]">next plan</a> for access to advanced features and more models.</p>
+      </div>
+    </div>
+
+    <!-- Quantum Machine Learning Card -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Upcoming Models on Quantum Machine Learning</h5>
+        <p class="card-text">Stay tuned for our upcoming models based on Quantum Machine Learning. They will revolutionize the way we simulate and optimize public policies systems.</p>
+      </div>
+    </div>
+  </div>
+  <script src="{{ url_for('lds.static', filename='js/auth.js') }}"></script>
+</div>

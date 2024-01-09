@@ -11,8 +11,11 @@
       <!-- Camera and controls -->
       <a-entity camera look-controls wasd-controls position="0 2 0"></a-entity>
 
+           <!--<a-entity id="lightSphere" geometry="primitive: sphere; radius: 0.2" material="shader: flat" light="type: point; color: #FFF" position="-4 10 -4"-->
+           <!--    animation="property: position; to: 4 15 -4; dir: alternate; loop: true"></a-entity>-->
+
       <!-- Sky -->
-      <a-sky id="sky" color="#87CEEB"></a-sky>
+      <a-sky id="sky" src={{url_for('lds.static', filename='textures/sky.jpg')}} radius="150"></a-sky>
 
       <!-- Ground plane -->
       <a-plane position="0 -0.1 0" rotation="-90 0 0" width="200" height="200" material="src: url(https://cdn.aframe.io/a-painter/images/floor.jpg); repeat: 100 100;"></a-plane>
@@ -21,7 +24,11 @@
       {% for building in city_data.buildings %}
       <a-entity id="{{ building.id }}" status="{{ building.status }}">
         <a-text value="Status: {{ building.status }}" position="{{ building.position_x }} {{ building.height }} {{ building.position_z }}" scale="2 2 2"></a-text>
-        <a-box position="{{ building.position_x }} 0 {{ building.position_z }}" width="{{ building.width }}" height="{{ building.height }}" depth="{{ building.depth }}" rotation="0 0 0" color="{{ building.color }}"></a-box>
+        {% if building.file == "" %}
+        <a-box position="{{ building.position_x }} 1 {{ building.position_z }}" width="{{ building.width }}" height="{{ building.height }}" depth="{{ building.depth }}" rotation="0 0 0" color="{{ building.color }}"></a-box>
+        {% else %}
+        <a-obj-model src={{url_for('lds.static', filename=building.file)}} position="{{ building.position_x }} 2 {{ building.position_z }}" scale="3 3 3" rotation="-90 0 0"></a-obj-model>
+        {% endif %}
       </a-entity>
       {% endfor %}
 
@@ -45,9 +52,9 @@
 
 <!-- Humans -->
 {% for human in city_data.humans %}
-<a-entity id="{{ human.id }}" position="{{ human.position_x }} 1 {{ human.position_z }}" rotation="-90 0 0">
-  <a-obj-model src={{url_for('lds.static', filename=human.file)}} scale="1 1 1"></a-obj-model>
-  <a-text value="Status: {{ human.status }}" position="0 1.5 0" scale="2 2 2"></a-text>
+<a-entity id="{{ human.id }}" position="{{ human.position_x }} 1 {{ human.position_z }}" rotation="-90 0 0" scale="6 6 6">
+  <a-obj-model src={{url_for('lds.static', filename='models/'+human.file)}} scale="6 6 6"></a-obj-model>
+  <a-text value="Status: {{ human.status }}" position="0 1.5 0" scale="4 4 4"></a-text>
 </a-entity>
 {% endfor %}
 

@@ -1,3 +1,15 @@
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+project_folder = os.path.expanduser('~/portal_gain')  # Adjust the path as needed
+load_dotenv(os.path.join(project_folder, '.env'))
+
+# Access environment variables
+URI_MONGO = os.environ.get("URI_MONGO")
+OPEN_AI_KEY = os.environ.get("OPENAI_API_KEY")
+HUGGINGFACE_API_KEY = os.environ.get("HUGGINGFACE_API_KEY")
+
 class Config_DEV:
 
     SECRET_KEY = '5791628bb0b13ce0c676dfde280ba245'
